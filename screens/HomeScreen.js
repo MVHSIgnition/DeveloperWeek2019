@@ -12,27 +12,27 @@ import { WebBrowser } from 'expo';
 
 export default class HomeScreen extends React.Component {
   static navigationOptions = {
-    header: null,
+    title: 'Food Near U'
   };
 
   render() {
     return (
       <View>
-        <Text style={{
-          fontSize: 44,
-          fontWeight: 'bold',
-          marginTop: 16,
-          marginLeft: 10
-        }}>Food near you</Text>
         <ScrollView>
           <View style={styles.eachFood}>
-            <Text>BigMac</Text>
+            <View style={styles.eachFoodView}>
+              <Text>BigMa</Text>
+            </View>
           </View>
-          <View>
-            <Text>Cheeeeeseburger</Text>
+          <View style={styles.eachFood}>
+            <View style={styles.eachFoodView}>
+              <Text>Cheeeeeseburger</Text>
+            </View>
           </View>
-          <View>
-            <Text>Burger King Burger Thing</Text>
+          <View style={styles.eachFood}>
+            <View style={styles.eachFoodView}>
+              <Text>Burger King Burger Thing</Text>
+            </View>
           </View>
         </ScrollView>
       </View>
@@ -75,6 +75,14 @@ export default class HomeScreen extends React.Component {
 
 const styles = StyleSheet.create({
   eachFood: {
+    marginTop: 10,
+    marginBottom: 10,
+    borderBottomColor: 'rgba(0, 0, 0, .5)',
+    borderBottomWidth: 1
+  },
+  eachFoodView: {
+    marginBottom: 15,
+    marginTop: 6,
     marginLeft: 10
   },
   container: {
