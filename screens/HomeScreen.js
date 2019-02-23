@@ -10,6 +10,9 @@ import {
   View,
 } from 'react-native';
 import { WebBrowser } from 'expo';
+import database from '../database';
+
+let data = database.categories;
 
 const styles = StyleSheet.create({
   mainList: {
@@ -19,43 +22,6 @@ const styles = StyleSheet.create({
 
   }
 });
-
-let data = [
-  {
-    category: 'Pizza',
-    foods: [
-      {
-        name: 'Hawaiian',
-        price: 3.2,
-        rating: 4.2,
-        img: 'https://31p86334w2bvkz0249eyr0cr-wpengine.netdna-ssl.com/wp-content/uploads/2014/08/It-doesnt-get-much-better-than-Homemade-Hawaiian-Pizza.-Tropical-paradise-for-dinner-2.jpg'
-      },
-      {
-        name: 'Cheese',
-        price: 9.2,
-        rating: 4.1,
-        img: 'https://upload.wikimedia.org/wikipedia/commons/a/a3/Eq_it-na_pizza-margherita_sep2005_sml.jpg'
-      },
-      {
-        name: 'Pepperoni',
-        price: 2.2,
-        rating: 4.9,
-        img: 'https://imagesvc.timeincapp.com/v3/mm/image?url=https%3A%2F%2Fcdn-image.myrecipes.com%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fmedium_2x%2Fpublic%2Fimage%2Frecipes%2Fck%2Fgluten-free-cookbook%2Fpepperoni-pizza-ck-x.jpg%3Fitok%3DNWreajsZ&w=450&c=sc&poi=face&q=85'
-      }
-    ]
-  },
-  {
-    category: 'Burgers',
-    foods: [
-      {
-        name: 'Big Mac',
-        price: 1.2,
-        rating: .1,
-        img: 'https://d12ph5aixxtnio.cloudfront.net/uploads/images/recipes/_full/veganbigmacstill.jpg'
-      }
-    ]
-  }
-]
 
 export default class HomeScreen extends React.Component {
   static navigationOptions = {
@@ -179,49 +145,3 @@ export default class HomeScreen extends React.Component {
     );
   };
 }
-
-/* 
-<View style={styles.container}>
-        <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
-          <View style={styles.welcomeContainer}>
-            <Image
-              source={
-                __DEV__
-                  ? require('../assets/images/robot-dev.png')
-                  : require('../assets/images/robot-prod.png')
-              }
-              style={styles.welcomeImage}
-            />
-          </View>
-
-          <View style={styles.getStartedContainer}>
-            {this._maybeRenderDevelopmentModeWarning()}
-
-            <Text style={styles.getStartedText}>Get started by opening</Text>
-
-            <View style={[styles.codeHighlightContainer, styles.homeScreenFilename]}>
-              <MonoText style={styles.codeHighlightText}>screens/HomeScreen.js</MonoText>
-            </View>
-
-            <Text style={styles.getStartedText}>
-              Change this text and your app will automatically reload.
-            </Text>
-          </View>
-
-          <View style={styles.helpContainer}>
-            <TouchableOpacity onPress={this._handleHelpPress} style={styles.helpLink}>
-              <Text style={styles.helpLinkText}>Help, it didn’t automatically reload!</Text>
-            </TouchableOpacity>
-          </View>
-        </ScrollView>
-
-        <View style={styles.tabBarInfoContainer}>
-          <Text style={styles.tabBarInfoText}>This is a tab bar. You can edit it in:</Text>
-
-          <View style={[styles.codeHighlightContainer, styles.navigationFilename]}>
-            <MonoText style={styles.codeHighlightText}>navigation/MainTabNavigator.js</MonoText>
-          </View>
-        </View>
-      </View>
-
-*/
