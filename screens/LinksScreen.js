@@ -1,30 +1,22 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
 
+import database from '../database';
+
 import { 
   View,
   FlatList,
   Text,
+  Image,
 } from 'react-native';
 
-let data = [
-  {
-    key: '0',
-    name: 'Hawaiian',
-    price: 3.2,
-    rating: 4.2
-  },
-  {
-    key: '1',
-    name: 'Pepperoni',
-    price: 6.9,
-    rating: 3.4
-  }
-];
+let category = 'Pizza';
+let dataIndex = database.categories.findIndex(item => item.category == category);
+let data = database.categories[dataIndex].foods;
 
 export default class LinksScreen extends React.Component {
   static navigationOptions = {
-    title: 'INSERT CATEGORY HERE',
+    title: category,
   };
 
   renderItem({ item, index }) {
@@ -51,10 +43,20 @@ export default class LinksScreen extends React.Component {
         },
         elevation: 3,
       }}>
-        <View style={{ width: 100, height: 100, borderRadius: 8, backgroundColor: '#CCC' }} />
+        <Image
+            source={{
+              uri: item.img
+            }}
+            style={{
+              width: 100,
+              height: 100,
+              borderRadius: 8,
+              marginRight: 8
+            }}
+        />
         <View style={{ marginLeft: 10 }}>
           <Text style={{ fontWeight: 'bold' }}>{item.name}</Text>
-          <Text>Price: ${item.price}</Text>
+          <Text>Price: ${database.formatter.price(item.price)}</Text>
           <Text>Rating: {item.rating}</Text>
         </View>
       </View>
@@ -62,6 +64,7 @@ export default class LinksScreen extends React.Component {
   }
 
   render() {
+    console.log('Data: ', data);
     return (
       <View>
         <FlatList
