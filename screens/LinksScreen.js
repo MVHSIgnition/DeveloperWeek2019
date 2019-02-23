@@ -1,6 +1,7 @@
 import React from 'react';
-import { ScrollView, StyleSheet } from 'react-native';
-import { MapView } from 'expo';
+import { StyleSheet } from 'react-native';
+
+import { View } from 'react-native';
 
 export default class LinksScreen extends React.Component {
   static navigationOptions = {
@@ -9,15 +10,9 @@ export default class LinksScreen extends React.Component {
 
   render() {
     return (
-      <MapView
-        style={{ flex: 1 }}
-        initialRegion={{
-          latitude: 37.78825,
-          longitude: -122.4324,
-          latitudeDelta: 0.0922,
-          longitudeDelta: 0.0421,
-        }}
-      ></MapView>
+      <View>
+        Wassup!
+      </View>
     );
   }
 }
