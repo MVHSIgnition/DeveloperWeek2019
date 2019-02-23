@@ -33,8 +33,32 @@ const database = {
                     img: 'https://d12ph5aixxtnio.cloudfront.net/uploads/images/recipes/_full/veganbigmacstill.jpg'
                 }
             ]
+        },
+        {
+            category: 'Burritos',
+            foods: [
+                {
+                    name: 'Chipotle',
+                    price: 4.8,
+                    rating: 4.1,
+                    img: 'https://dorastable.com/wp-content/uploads/2018/01/vegan-chipotle-lime-burrito.jpg'
+                },
+                {
+                    name: 'Taco Bell',
+                    price: 3.6,
+                    rating: 3.5,
+                    img: 'https://www.tacobell.com/images/22201_burrito_supreme_269x269.jpg'
+                }
+            ]
         }
-    ]
+    ],
+    formatter: {
+        price: new Intl.NumberFormat('en-US', {
+            style: 'currency',
+            currency: 'USD',
+            minimumFractionDigits: 2
+        }).format
+    }
 }
 
 export default database;

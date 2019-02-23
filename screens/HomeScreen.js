@@ -1,22 +1,20 @@
 import React from 'react';
 import {
   Image,
-  Platform,
-  ScrollView,
   FlatList,
   StyleSheet,
   Text,
-  TouchableOpacity,
   View,
 } from 'react-native';
 import { WebBrowser } from 'expo';
 import database from '../database';
+import { AppRegistry, TextInput } from 'react-native';
 
 let data = database.categories;
 
 const styles = StyleSheet.create({
   mainList: {
-
+    height: '100%'
   },
   horizontalList: {
 
@@ -31,7 +29,6 @@ export default class HomeScreen extends React.Component {
   renderCategory({ item, index }) {
 
     function renderFood({ item }) {
-
       return (
         <View>
           <Image
@@ -54,7 +51,7 @@ export default class HomeScreen extends React.Component {
             style={{
               fontSize: 14
             }}
-          >${item.price}</Text>
+          >{database.formatter.price(item.price)}</Text>
         </View>
       );
     }
@@ -102,6 +99,16 @@ export default class HomeScreen extends React.Component {
   render() {
     return (
       <View>
+        <TextInput
+          style={{
+            height: 50,
+            backgroundColor: '#ddd',
+            paddingLeft: 14,
+            fontSize: 16
+          }}
+          onChange={search => this.setState({ search })}
+          placeholder={"Search"}
+        ></TextInput>
         <FlatList
           contentContainerStyle={styles.mainList}
           data={data}
