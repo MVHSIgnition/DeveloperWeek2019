@@ -3,6 +3,7 @@ import {
   Image,
   Platform,
   ScrollView,
+  FlatList,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -10,31 +11,65 @@ import {
 } from 'react-native';
 import { WebBrowser } from 'expo';
 
+const styles = StyleSheet.create({
+  mainList: {
+
+  }
+});
+
+let data = [
+  {
+    category: 'Pizza',
+    foods: [
+      {
+        name: 'Hawaiian',
+        price: 3.2,
+        rating: 4.2
+      }
+    ]
+  },
+  {
+    category: 'Burgers',
+    foods: [
+      {
+        name: 'Big Mac',
+        price: 1.2,
+        rating: .1
+      }
+    ]
+  }
+]
+
 export default class HomeScreen extends React.Component {
   static navigationOptions = {
     title: 'Food Near U'
   };
 
+  renderItem({ item, index }) {
+    console.log(item);
+    return (
+      <View style={{
+        marginLeft: 10,
+        marginRight: 10
+      }}>
+        <Text style={{
+          fontSize: 20,
+          fontWeight: 'bold'
+        }}>{item.category}</Text>
+      
+      </View>
+    );
+  }
+
   render() {
     return (
       <View>
-        <ScrollView>
-          <View style={styles.eachFood}>
-            <View style={styles.eachFoodView}>
-              <Text>BigMa</Text>
-            </View>
-          </View>
-          <View style={styles.eachFood}>
-            <View style={styles.eachFoodView}>
-              <Text>Cheeeeeseburger</Text>
-            </View>
-          </View>
-          <View style={styles.eachFood}>
-            <View style={styles.eachFoodView}>
-              <Text>Burger King Burger Thing</Text>
-            </View>
-          </View>
-        </ScrollView>
+        <FlatList
+          contentContainerStyle={styles.mainList}
+          data={data}
+          renderItem={this.renderItem}
+        >
+        </FlatList>
       </View>
     );
   }
@@ -72,107 +107,6 @@ export default class HomeScreen extends React.Component {
     );
   };
 }
-
-const styles = StyleSheet.create({
-  eachFood: {
-    marginTop: 10,
-    marginBottom: 10,
-    borderBottomColor: 'rgba(0, 0, 0, .5)',
-    borderBottomWidth: 1
-  },
-  eachFoodView: {
-    marginBottom: 15,
-    marginTop: 6,
-    marginLeft: 10
-  },
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-  },
-  developmentModeText: {
-    marginBottom: 20,
-    color: 'rgba(0,0,0,0.4)',
-    fontSize: 14,
-    lineHeight: 19,
-    textAlign: 'center',
-  },
-  contentContainer: {
-    paddingTop: 30,
-  },
-  welcomeContainer: {
-    alignItems: 'center',
-    marginTop: 10,
-    marginBottom: 20,
-  },
-  welcomeImage: {
-    width: 100,
-    height: 80,
-    resizeMode: 'contain',
-    marginTop: 3,
-    marginLeft: -10,
-  },
-  getStartedContainer: {
-    alignItems: 'center',
-    marginHorizontal: 50,
-  },
-  homeScreenFilename: {
-    marginVertical: 7,
-  },
-  codeHighlightText: {
-    color: 'rgba(96,100,109, 0.8)',
-  },
-  codeHighlightContainer: {
-    backgroundColor: 'rgba(0,0,0,0.05)',
-    borderRadius: 3,
-    paddingHorizontal: 4,
-  },
-  getStartedText: {
-    fontSize: 17,
-    color: 'rgba(96,100,109, 1)',
-    lineHeight: 24,
-    textAlign: 'center',
-  },
-  tabBarInfoContainer: {
-    position: 'absolute',
-    bottom: 0,
-    left: 0,
-    right: 0,
-    ...Platform.select({
-      ios: {
-        shadowColor: 'black',
-        shadowOffset: { height: -3 },
-        shadowOpacity: 0.1,
-        shadowRadius: 3,
-      },
-      android: {
-        elevation: 20,
-      },
-    }),
-    alignItems: 'center',
-    backgroundColor: '#fbfbfb',
-    paddingVertical: 20,
-  },
-  tabBarInfoText: {
-    fontSize: 17,
-    color: 'rgba(96,100,109, 1)',
-    textAlign: 'center',
-  },
-  navigationFilename: {
-    marginTop: 5,
-  },
-  helpContainer: {
-    marginTop: 15,
-    alignItems: 'center',
-  },
-  helpLink: {
-    paddingVertical: 15,
-  },
-  helpLinkText: {
-    fontSize: 14,
-    color: '#2e78b7',
-  },
-});
-
 
 /* 
 <View style={styles.container}>
