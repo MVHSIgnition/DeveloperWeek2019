@@ -14,6 +14,9 @@ import { WebBrowser } from 'expo';
 const styles = StyleSheet.create({
   mainList: {
 
+  },
+  horizontalList: {
+
   }
 });
 
@@ -25,6 +28,16 @@ let data = [
         name: 'Hawaiian',
         price: 3.2,
         rating: 4.2
+      },
+      {
+        name: 'Cheese',
+        price: 9.2,
+        rating: 4.1
+      },
+      {
+        name: 'Pepperoni',
+        price: 2.2,
+        rating: 4.9
       }
     ]
   },
@@ -45,18 +58,49 @@ export default class HomeScreen extends React.Component {
     title: 'Food Near U'
   };
 
-  renderItem({ item, index }) {
-    console.log(item);
+  renderCategory({ item, index }) {
+
+    function renderFood({ item }) {
+      return (
+        <View>
+          <Text>{item.name}</Text>
+        </View>
+      );
+    }
+
     return (
-      <View style={{
-        marginLeft: 10,
-        marginRight: 10
-      }}>
+      <View
+        elevation={5}
+        style={{
+          marginLeft: 10,
+          marginRight: 10,
+          marginTop: 10,
+          marginBottom: 10,
+          padding: 10,
+          borderColor: 'rgba(0, 0, 0, .2)',
+          borderWidth: 1,
+          borderRadius: 8,
+          backgroundColor: '#fff',
+          shadowColor: "#000",
+          shadowOpacity: 0.07,
+          shadowRadius: 2,
+          shadowOffset: {
+            height: 4,
+            width: 3
+          },
+          elevation: 3,
+        }}
+      >
         <Text style={{
           fontSize: 20,
           fontWeight: 'bold'
         }}>{item.category}</Text>
-      
+        <FlatList
+          horizontal={true}
+          contentContainerStyle={styles.horizontalList}
+          data={item.foods}
+          renderItem={renderFood}
+        ></FlatList>
       </View>
     );
   }
@@ -67,7 +111,7 @@ export default class HomeScreen extends React.Component {
         <FlatList
           contentContainerStyle={styles.mainList}
           data={data}
-          renderItem={this.renderItem}
+          renderItem={this.renderCategory}
         >
         </FlatList>
       </View>
