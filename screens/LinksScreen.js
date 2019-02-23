@@ -56,7 +56,7 @@ export default class LinksScreen extends React.Component {
         />
         <View style={{ marginLeft: 10 }}>
           <Text style={{ fontWeight: 'bold' }}>{item.name}</Text>
-          <Text>Price: ${database.formatter.price(item.price)}</Text>
+          <Text>Price: {database.formatter.price(item.price)}</Text>
           <Text>Rating: {item.rating}</Text>
         </View>
       </View>

@@ -5,6 +5,7 @@ import {
   StyleSheet,
   Text,
   View,
+  ScrollView
 } from 'react-native';
 import { WebBrowser } from 'expo';
 import database from '../database';
@@ -14,7 +15,6 @@ let data = database.categories;
 
 const styles = StyleSheet.create({
   mainList: {
-    height: '100%'
   },
   horizontalList: {
 
@@ -58,7 +58,6 @@ export default class HomeScreen extends React.Component {
 
     return (
       <View
-        elevation={5}
         style={{
           marginLeft: 10,
           marginRight: 10,
@@ -91,7 +90,7 @@ export default class HomeScreen extends React.Component {
           contentContainerStyle={styles.horizontalList}
           data={item.foods}
           renderItem={renderFood}
-        ></FlatList>
+        />
       </View>
     );
   }
@@ -108,13 +107,14 @@ export default class HomeScreen extends React.Component {
           }}
           onChange={search => this.setState({ search })}
           placeholder={"Search"}
-        ></TextInput>
-        <FlatList
-          contentContainerStyle={styles.mainList}
-          data={data}
-          renderItem={this.renderCategory}
-        >
-        </FlatList>
+        />
+        <View>
+          <FlatList
+            contentContainerStyle={styles.mainList}
+            data={data}
+            renderItem={this.renderCategory}
+          />
+        </View>
       </View>
     );
   }

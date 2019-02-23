@@ -20,6 +20,12 @@ const database = {
                     price: 2.2,
                     rating: 4.9,
                     img: 'https://imagesvc.timeincapp.com/v3/mm/image?url=https%3A%2F%2Fcdn-image.myrecipes.com%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fmedium_2x%2Fpublic%2Fimage%2Frecipes%2Fck%2Fgluten-free-cookbook%2Fpepperoni-pizza-ck-x.jpg%3Fitok%3DNWreajsZ&w=450&c=sc&poi=face&q=85'
+                },
+                {
+                    name: 'Pizza Hut',
+                    price: 1923.9,
+                    rating: 3.5,
+                    img: 'https://cdn-a.william-reed.com/var/wrbm_gb_food_pharma/storage/images/publications/food-beverage-nutrition/dairyreporter.com/news/markets/pizza-hut-adds-25-more-cheese-to-pan-pizzas-as-part-of-dairy-checkoff-program/7919577-1-eng-GB/Pizza-Hut-adds-25-more-cheese-to-pan-pizzas-as-part-of-dairy-checkoff-program_wrbm_large.jpg'
                 }
             ]
         },
