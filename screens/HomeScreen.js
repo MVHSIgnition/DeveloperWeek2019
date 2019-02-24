@@ -164,13 +164,20 @@ export default class HomeScreen extends React.Component {
           placeholder="Search"
         />
         <View>
-          <FlatList
+          {dataToShow.length !== 0 && <FlatList
             contentContainerStyle={styles.mainList}
             data={dataToShow}
             renderItem={this.renderCategory}
             keyExtractor={item => item.category}
             extraData={this.state}
-          />
+          />}
+          {dataToShow.length === 0 && <Text
+            style={{
+              fontSize: 18,
+              textAlign: 'center',
+              marginTop: '50%'
+            }}
+          >No results for {this.state.search}</Text>}
         </View>
       </View>
     );
