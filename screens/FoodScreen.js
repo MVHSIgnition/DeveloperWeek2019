@@ -1,7 +1,5 @@
 import React from 'react';
-import { StyleSheet } from 'react-native';
-
-import { Button } from 'react-native';
+import { StyleSheet, Linking } from 'react-native';
 
 import {
   View,
@@ -53,6 +51,9 @@ export default class FoodScreen extends React.Component {
               marginBottom: 10
             }}
           >Reviews</Text>
+          <Button onPress={() => {
+            Linking.openURL(item.postmatesLink);
+          }}>Open this food on Postmates</Button>
           {this.diplayReviews()}
         </View>
       </View>
@@ -75,10 +76,10 @@ export default class FoodScreen extends React.Component {
         keyExtractor={item => item.name}
         renderItem={({ item, index }) => {
 
-          return <View>
+          return <View style={{ marginBottom: 10 }}>
             <Text style={{ fontWeight: 'bold', fontSize: 16 }}>{item.name}</Text>
-            <Text>Rating: {item.rating}/5</Text>
-            <Text>{item.text}</Text>
+            <Text style={{ marginLeft: 10 }}>Rating: {item.calcRating}/5</Text>
+            <Text style={{ marginLeft: 10 }}>{item.text}</Text>
           </View>
         }}
         extraData={this.state}
