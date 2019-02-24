@@ -3,13 +3,13 @@ import { StyleSheet } from 'react-native';
 
 import database from '../database';
 import { Button } from 'react-native';
+import Picker from 'react-native-picker-select';
 
 import {
   View,
   FlatList,
   Text,
-  Image,
-  Picker
+  Image
 } from 'react-native';
 
 
@@ -89,31 +89,23 @@ export default class LinksScreen extends React.Component {
 
     return (
       <View>
-        <Button
-          onPress={() => {
-            this.setState({
-              sortBy: 'price'
-            });
-          }}
-          title="Price"
-          color="#4286f4"
-          style={{
-            left: 0,
-            top: 0
-          }}
-        />
-        <Button
-          onPress={() => {
-            this.setState({
-              sortBy: 'rating'
-            });
-          }}
-          title="Rating"
-          color="#4286f4"
-          style={{
-            left: 0,
-            top: 0
-          }}
+        <Picker
+          items={[
+            {
+              label: 'Relevance',
+              value: 'relevance'
+            },
+            {
+              label: 'Price',
+              value: 'price'
+            },
+            {
+              label: 'Rating',
+              value: 'rating'
+            }
+          ]}
+          onValueChange={sortBy => this.setState({ sortBy })}
+          placeholder={{}}
         />
         <FlatList
           contentContainerStyle={styles.mainList}

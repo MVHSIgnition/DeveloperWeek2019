@@ -5,11 +5,12 @@ import {
   StyleSheet,
   Text,
   View,
-  TouchableOpacity
+  TouchableOpacity,
+  Animated,
+  TextInput
 } from 'react-native';
 import { WebBrowser, Location, Permissions } from 'expo';
 import database from '../database';
-import { TextInput } from 'react-native';
 
 import cio from 'cheerio-without-node-native';
 
@@ -21,6 +22,8 @@ const styles = StyleSheet.create({
   horizontalList: {
   }
 });
+
+const AnimatedTextInput = Animated.createAnimatedComponent(TextInput);
 
 export default class HomeScreen extends React.Component {
   static navigationOptions = {
@@ -78,7 +81,8 @@ export default class HomeScreen extends React.Component {
           ></Image>
           <Text
             style={{
-              fontSize: 16
+              fontSize: 16,
+              width: 100
             }}
           >{item.name}</Text>
           <Text
@@ -142,19 +146,22 @@ export default class HomeScreen extends React.Component {
 
     let dataToShow = data;
 
-    /* if (this.state.search) {
+    if (this.state) {
+      if (this.state.search) {
+        dataToShow = dataToShow.filter(e => e.category.toLocaleLowerCase().includes(this.state.search.toLocaleLowerCase()));
+      }
+    }
 
-    } */
-    console.log('Location: ', this.state.location);
+    // console.log('Location: ', this.state.location);
 
     if (this.state.location !== null) {
       let lat = this.state.location.coords.latitude;
       let lng = this.state.location.coords.longitude;
       fetch(`https://gfe.cit.api.here.com/2/search/proximity.json?app_id=HoeQKWhoVTbuQ8HkxAjL&app_code=37-EHs_xz3YwLyN7t52JxQ&layer_ids=4711&key_attribute=NAME&proximity=${lat},${lng}`)
-        .then(response => response.json())
+        .then(res => res.json())
         .then(data => {
-          console.log('data: ', data)
-          if (data.geometries.length != 0) {
+          // console.log('data: ', data)
+          if (data.geometries.length !== 0) {
             console.log('YOU ARE IN THE FENCEEEEE!');
           }
         })
@@ -163,23 +170,31 @@ export default class HomeScreen extends React.Component {
 
     return (
       <View>
-        <TextInput
+        <AnimatedTextInput
           style={{
             height: 50,
             backgroundColor: '#ddd',
             paddingLeft: 14,
             fontSize: 16
           }}
-          onChange={search => this.setState({ search })}
-          placeholder={"Search"}
+          onChangeText={search => this.setState({ search })}
+          placeholder="Search"
         />
         <View>
-          <FlatList
+          {dataToShow.length !== 0 && <FlatList
             contentContainerStyle={styles.mainList}
             data={dataToShow}
             renderItem={this.renderCategory}
             keyExtractor={item => item.category}
-          />
+            extraData={this.state}
+          />}
+          {dataToShow.length === 0 && <Text
+            style={{
+              fontSize: 18,
+              textAlign: 'center',
+              marginTop: '50%'
+            }}
+          >No results for {this.state.search}</Text>}
         </View>
       </View>
     );
