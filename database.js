@@ -58,51 +58,6 @@ const database = {
       ]
     },
     {
-      category: 'Chicken Dishes',
-      foods: [
-        {
-          name: 'Tandoori Chicken Leg Quarter',
-          restaurant: 'Kebab and Curry',
-          price: 4.5,
-          yelpRating: 4.3,
-          reviews: [
-            {
-              name: 'John Abraham',
-              text: 'The Tandoori Chicken brought me back to India it was sooooo good.',
-              calcRating: 5
-            },
-            {
-              name: 'Matthew McKown',
-              text: 'The Tandoori Chicken was ok, but the price made me fear what was really in it.',
-              calcRating: 1
-            }
-          ],
-
-          description: 'Leg quarter marinated in our homemade spices and baked over grill.',
-          img: 'https://dinnerthendessert.com/wp-content/uploads/2018/03/Tandoori-Chicken-4.jpg'
-        },
-        {
-          name: 'Chicken Wow Grilled Chicken',
-          restaurant: 'Chicken Wow',
-          price: 6.5,
-          yelpRating: 4.1,
-          reviews: [
-            {
-              name: 'John Abraham',
-              text: 'Grilled Chicken was way too small and not worth the price. Not to mention soggy...dreadful',
-              calcRating: 5
-            },
-            {
-              name: 'Allen Heath',
-              text: 'Grilled Chicken was actually pretty good and felt kinda healthy.',
-              calcRating: 1
-            }
-          ],
-          img: 'https://s3-media4.fl.yelpcdn.com/bphoto/jJD46dPoiuaR8xJFSIc89w/348s.jpg'
-        }
-      ]
-    },
-    {
       category: 'Curry',
       foods: [
         {
@@ -190,7 +145,71 @@ const database = {
           img: 'https://www.cheflingkitchen.com/wp-content/uploads/2018/02/murgh-cholay.jpg'
         },
       ]
-    }
+    },
+    {
+      category: 'T-Shirts',
+      foods: [
+        {
+          name: 'Supreme Tee',
+          color: 'white',
+          material: 'cotton',
+          price: '500',
+          img: 'https://cdn.shopify.com/s/files/1/0866/4890/products/t_large.jpg?v=1539923636'
+        },
+        {
+          name: 'Adidas Tee',
+          color: 'black',
+          material: 'polyester',
+          price: '40',
+          img: 'https://images-na.ssl-images-amazon.com/images/I/81YINXHe6WL._UX342_.jpg'
+        },
+      ]
+    },
+    {
+      category: 'Chicken Dishes',
+      foods: [
+        {
+          name: 'Tandoori Chicken Leg Quarter',
+          restaurant: 'Kebab and Curry',
+          price: 4.5,
+          yelpRating: 4.3,
+          reviews: [
+            {
+              name: 'John Abraham',
+              text: 'The Tandoori Chicken brought me back to India it was sooooo good.',
+              calcRating: 5
+            },
+            {
+              name: 'Matthew McKown',
+              text: 'The Tandoori Chicken was ok, but the price made me fear what was really in it.',
+              calcRating: 1
+            }
+          ],
+
+          description: 'Leg quarter marinated in our homemade spices and baked over grill.',
+          img: 'https://dinnerthendessert.com/wp-content/uploads/2018/03/Tandoori-Chicken-4.jpg'
+        },
+        {
+          name: 'Chicken Wow Grilled Chicken',
+          restaurant: 'Chicken Wow',
+          price: 6.5,
+          yelpRating: 4.1,
+          reviews: [
+            {
+              name: 'John Abraham',
+              text: 'Grilled Chicken was way too small and not worth the price. Not to mention soggy...dreadful',
+              calcRating: 5
+            },
+            {
+              name: 'Allen Heath',
+              text: 'Grilled Chicken was actually pretty good and felt kinda healthy.',
+              calcRating: 1
+            }
+          ],
+          img: 'https://s3-media4.fl.yelpcdn.com/bphoto/jJD46dPoiuaR8xJFSIc89w/348s.jpg'
+        }
+      ]
+    },
   ],
   formatter: {
     price: new Intl.NumberFormat('en-US', {
