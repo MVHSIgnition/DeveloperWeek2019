@@ -95,9 +95,9 @@ export default class HomeScreen extends React.Component {
       console.error('problem bith');
     }
 
-    let location = await Location.getCurrentPositionAsync({});
+    //let location = await Location.getCurrentPositionAsync({});
 
-    /*let location = {
+    let location = {
       "coords": {
         "accuracy": 5,
         "altitude": 0,
@@ -108,7 +108,7 @@ export default class HomeScreen extends React.Component {
         "speed": -1,
       },
       "timestamp": 1551034198566.186,
-    }*/
+    }
 
     this.setState({ location });
 
