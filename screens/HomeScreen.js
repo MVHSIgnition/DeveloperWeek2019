@@ -8,12 +8,13 @@ import {
   TouchableOpacity,
   Animated,
   TextInput,
-  AppState
+  AppState,
+  Geolocation
 } from 'react-native';
 import { WebBrowser, Location, Permissions } from 'expo';
 import database from '../database';
 
-import cio from 'cheerio-without-node-native';
+import AppStateListener from "react-native-appstate-listener";
 
 let data = database.categories;
 
@@ -52,6 +53,10 @@ export default class HomeScreen extends React.Component {
     //this.$ = cio.load('');
   }*/
 
+  componentWillMount() {
+    this._getLocationAsync();
+  }
+
   /*componentDidMount() {
     AppState.addEventListener('change', state => {
       console.log('state: ', state);
@@ -73,6 +78,15 @@ export default class HomeScreen extends React.Component {
     }
     this.setState({appState: nextAppState});
   };*/
+
+  handleActive = () => {
+    console.log('active!!!!!!!!!!!!!!');
+    this._getLocationAsync();
+  };
+
+  handleBackground = () => {};
+
+  handleInactive = () => {};
 
   _getLocationAsync = async () => {
     let { status } = await Permissions.askAsync(Permissions.LOCATION);
@@ -97,6 +111,23 @@ export default class HomeScreen extends React.Component {
     }
 
     this.setState({ location });
+
+    if (this.state.location !== null) {
+      let lat = this.state.location.coords.latitude;
+      let lng = this.state.location.coords.longitude;
+      fetch(`https://gfe.cit.api.here.com/2/search/proximity.json?app_id=HoeQKWhoVTbuQ8HkxAjL&app_code=37-EHs_xz3YwLyN7t52JxQ&layer_ids=4711&key_attribute=NAME&proximity=${lat},${lng}`)
+        .then(res => res.json())
+        .then(data => {
+          // console.log('data: ', data)
+          if (data.geometries.length !== 0) {
+            console.log('YOU ARE IN THE FENCEEEEE!');
+            this.setState({showCategories:true});
+          } else {
+            this.setState({showCategories:false});
+          }
+        })
+        .catch(err => console.log(err));
+    }
   };
 
   renderCategory = ({ item, index }) => {
@@ -177,6 +208,8 @@ export default class HomeScreen extends React.Component {
     );
   }
 
+  
+
   render() {
 
     let dataToShow = data;
@@ -187,28 +220,15 @@ export default class HomeScreen extends React.Component {
       }
     }
 
-    //this._getLocationAsync();
-    /* if (this.state.location !== null) {
-      let lat = this.state.location.coords.latitude;
-      let lng = this.state.location.coords.longitude;
-      fetch(`https://gfe.cit.api.here.com/2/search/proximity.json?app_id=HoeQKWhoVTbuQ8HkxAjL&app_code=37-EHs_xz3YwLyN7t52JxQ&layer_ids=4711&key_attribute=NAME&proximity=${lat},${lng}`)
-        .then(res => res.json())
-        .then(data => {
-          // console.log('data: ', data)
-          if (data.geometries.length !== 0) {
-            //console.log('YOU ARE IN THE FENCEEEEE!');
-            this.setState({showCategories:true});
-          } else {
-            this.setState({showCategories:false});
-          }
-        })
-        .catch(err => console.log(err));
-    } */
-
     if (this.state.showCategories) {
       //console.log(this.state.showCategories);
       return (
         <View>
+          <AppStateListener
+            onActive={this.handleActive}
+            onBackground={this.handleBackground}
+            onInactive={this.handleInactive}
+          />
           <AnimatedTextInput
             style={{
               height: 50,
@@ -241,6 +261,11 @@ export default class HomeScreen extends React.Component {
       //console.log(this.state.showCategories);
       return (
         <View>
+          <AppStateListener
+            onActive={this.handleActive}
+            onBackground={this.handleBackground}
+            onInactive={this.handleInactive}
+          />
           <Text style={{fontSize: 18, textAlign: 'center', marginTop: '50%'}}>No restaurants nearby!</Text>
         </View>
       );
