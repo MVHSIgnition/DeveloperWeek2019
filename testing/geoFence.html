@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="initial-scale=1.0, 
+      width=device-width" />
+    <script src="http://js.api.here.com/v3/3.0/mapsjs-core.js" 
+      type="text/javascript" charset="utf-8"></script>
+    <script src="http://js.api.here.com/v3/3.0/mapsjs-service.js" 
+      type="text/javascript" charset="utf-8"></script>
+    <script src="http://js.api.here.com/v3/3.0/mapsjs-ui.js" 
+      type="text/javascript" charset="utf-8"></script>
+    <script type="text/javascript" charset="UTF-8"
+      src="http://js.api.here.com/v3/3.0/mapsjs-places.js"></script>
+    <link rel="stylesheet" type="text/css" 
+      href="http://js.api.here.com/v3/3.0/mapsjs-ui.css" />
+  </head>
+  <body>
+        <div id="map" style="width: 640px; height: 480px"/>
+    <script src="https://js.api.here.com/v3/3.0/mapsjs-core.js"></script>
+    <script src="https://js.api.here.com/v3/3.0/mapsjs-service.js"></script>
+    <script src="https://js.api.here.com/v3/3.0/mapsjs-mapevents.js"></script>
+    <script type="text/javascript" charset="utf-8">
+    const platform = new H.service.Platform({
+        app_id: 'HoeQKWhoVTbuQ8HkxAjL',
+        app_code: '37-EHs_xz3YwLyN7t52JxQ',
+        useHTTPS: true
+    });
+
+        const defaultLayers = platform.createDefaultLayers();
+
+        const map = new H.Map(
+        document.querySelector('#map'),
+        defaultLayers.satellite.map,
+        {
+            zoom: 17.4,
+            center: { lat: 37.3257436, lng: -121.9461324 }
+        },
+    );
+    const mapEvents = new H.mapevents.MapEvents(map);
+    const behavior = new H.mapevents.Behavior(mapEvents);
+    map.addEventListener("tap", (e) => {
+        const { viewportX, viewportY } = e.currentPointer;
+        const cords = map.screenToGeo(viewportX, viewportY);
+        console.log(`${cords.lng} ${cords.lat}`);
+    });
+</script>
