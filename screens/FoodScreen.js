@@ -5,7 +5,8 @@ import {
   View,
   FlatList,
   Text,
-  Image
+  Image,
+  Button
 } from 'react-native';
 
 
@@ -33,27 +34,40 @@ export default class FoodScreen extends React.Component {
               marginBottom: 10
             }}
           >{this.props.navigation.state.params.food.name}</Text>
-          <Image
-            source={{
-              uri: this.props.navigation.state.params.food.img
+          <View>
+            <Image
+              source={{
+                uri: this.props.navigation.state.params.food.img
+              }}
+              style={{
+                width: 200,
+                height: 200,
+                borderRadius: 8,
+                marginBottom: 10
+              }}
+            />
+            <Text
+              style={{
+              }}
+            >Fast-food chain offering Mexican fare, including design-your-own burritos, tacos &nbsp; bowls.</Text>
+          </View>
+          <Button
+            onPress={() => {
+              Linking.openURL(this.props.navigation.state.params.food.postmatesLink);
             }}
+            title="Order from this location on Postmates"
             style={{
-              width: 200,
-              height: 200,
-              borderRadius: 8,
+              marginTop: 20
             }}
           />
           <Text
             style={{
-              fontSize: 24,
+              fontSize: 40,
               fontWeight: 'bold',
               marginTop: 28,
-              marginBottom: 10
+              marginBottom: 2
             }}
           >Reviews</Text>
-          <Button onPress={() => {
-            Linking.openURL(item.postmatesLink);
-          }}>Open this food on Postmates</Button>
           {this.diplayReviews()}
         </View>
       </View>
@@ -70,22 +84,62 @@ export default class FoodScreen extends React.Component {
       return <Text>There are no reviews</Text>;
     }
 
-    return (
-      <FlatList
-        data={reviews}
-        keyExtractor={item => item.name}
-        renderItem={({ item, index }) => {
+    let avgRating = 0;
+    for (let i = 0; i < reviews.length; i++) {
+      avgRating += reviews[i].calcRating;
+    }
 
-          return <View style={{ marginBottom: 10 }}>
-            <Text style={{ fontWeight: 'bold', fontSize: 16 }}>{item.name}</Text>
-            <Text style={{ marginLeft: 10 }}>Rating: {item.calcRating}/5</Text>
-            <Text style={{ marginLeft: 10 }}>{item.text}</Text>
-          </View>
-        }}
-        extraData={this.state}
-        contentContainerStyle={{}}
-      />
-    
+    avgRating /= reviews.length;
+
+    let posReviews = reviews.filter(r => r.calcRating >= avgRating);
+    let negReviews = reviews.filter(r => r.calcRating <= avgRating);
+
+    return (
+      <View>
+        <Text
+          style={{
+            fontSize: 26,
+            fontWeight: 'bold',
+            marginTop: 20,
+            marginBottom: 10
+          }}
+        >Positive Reviews</Text>
+        <FlatList
+          data={posReviews}
+          keyExtractor={item => item.name}
+          renderItem={({ item, index }) => {
+
+            return <View style={{ marginBottom: 10 }}>
+              <Text style={{ fontWeight: 'bold', fontSize: 16 }}>{item.name}</Text>
+              <Text style={{ marginLeft: 10 }}>Rating: {item.calcRating}/5</Text>
+              <Text style={{ marginLeft: 10 }}>{item.text}</Text>
+            </View>
+          }}
+          extraData={this.state}
+          contentContainerStyle={{}}
+        />
+        <Text
+          style={{
+            fontSize: 26,
+            fontWeight: 'bold',
+            marginTop: 20,
+            marginBottom: 10
+          }}>Negative Reviews</Text>
+        <FlatList
+          data={negReviews}
+          keyExtractor={item => item.name}
+          renderItem={({ item, index }) => {
+            return <View style={{ marginBottom: 10 }}>
+              <Text style={{ fontWeight: 'bold', fontSize: 16 }}>{item.name}</Text>
+              <Text style={{ marginLeft: 10 }}>Rating: {item.calcRating}/5</Text>
+              <Text style={{ marginLeft: 10 }}>{item.text}</Text>
+            </View>
+          }}
+          extraData={this.state}
+          contentContainerStyle={{}}
+        />
+      </View>
+        
     );
   }
 
