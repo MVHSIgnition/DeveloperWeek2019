@@ -68,19 +68,30 @@ export default class LinksScreen extends React.Component {
   render() {
 
     let dataIndex = database.categories.findIndex(item => item.category == this.props.navigation.state.params.category);
+    this.data = database.categories[dataIndex].foods;
 
-    this.data = database.categories[dataIndex].foods.sort((a, b) => {
-      return a.price - b.price;
-    });
+    if (this.state) {
+      if (this.state.sortBy === 'price') {
+        this.data.sort((a, b) => {
+          return a.price - b.price;
+        });
+      } else if (this.state.sortBy === 'rating') {
+        this.data.sort((a, b) => {
+          return a.rating - b.rating;
+        });
+      }
+    }
 
     return (
-
-
       <View>
         <Button
-          //onPress={}
+          onPress={() => {
+            this.setState({
+              sortBy: 'price'
+            });
+          }}
           style={{ textAlign: 'right' }}
-          title="Price(Least to Greatest)"
+          title="Price (Least to Greatest)"
           color="#4286f4"
           accessibilityLabel="Order the prices in ascending order "
         />
@@ -88,6 +99,7 @@ export default class LinksScreen extends React.Component {
           contentContainerStyle={styles.mainList}
           data={this.data}
           renderItem={this.renderItem}
+          keyExtractor={item => item.name}
         />
       </View>
     );
