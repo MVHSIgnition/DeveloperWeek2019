@@ -61,6 +61,13 @@ export default class FoodScreen extends React.Component {
               marginTop: 20
             }}
           />
+          <Button
+            onPress={() => {
+              this.props.navigation.navigate('Route');
+            }}
+            title="Get directions"
+            style={{marginTop: 20}}
+          />
           <Text
             style={{
               fontSize: 40,
