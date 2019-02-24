@@ -11,6 +11,8 @@ import { WebBrowser, Location, Permissions } from 'expo';
 import database from '../database';
 import { TextInput } from 'react-native';
 
+import cio from 'cheerio-without-node-native';
+
 let data = database.categories;
 
 const styles = StyleSheet.create({
@@ -29,6 +31,20 @@ export default class HomeScreen extends React.Component {
     location: null,
     errorMessage: null
   };
+
+  constructor() {
+    super();
+    fetch('https://www.zomato.com/santa-clara-ca/mezbaan-bar-indian-cuisine-santa-clara/menu', {
+      method: 'GET',
+      headers: {
+        "User-Agent": "Mozilla/5.0",
+        "Authorization": "Basic " + 'user:pass'
+      },
+    })
+      .then(response => console.log(response))
+      .catch(err => console.log(err));
+    //this.$ = cio.load('');
+  }
 
   componentWillMount() {
     this._getLocationAsync();
