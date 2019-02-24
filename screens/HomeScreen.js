@@ -5,11 +5,11 @@ import {
   StyleSheet,
   Text,
   View,
-  ScrollView
+  TouchableOpacity
 } from 'react-native';
 import { WebBrowser } from 'expo';
 import database from '../database';
-import { AppRegistry, TextInput } from 'react-native';
+import { TextInput } from 'react-native';
 
 let data = database.categories;
 
@@ -17,16 +17,15 @@ const styles = StyleSheet.create({
   mainList: {
   },
   horizontalList: {
-
   }
 });
 
 export default class HomeScreen extends React.Component {
   static navigationOptions = {
-    title: 'Food Near U'
+    header: null
   };
 
-  renderCategory({ item, index }) {
+  renderCategory = ({ item, index }) => {
 
     function renderFood({ item }) {
       return (
@@ -57,45 +56,61 @@ export default class HomeScreen extends React.Component {
     }
 
     return (
-      <View
-        style={{
-          marginLeft: 10,
-          marginRight: 10,
-          marginTop: 10,
-          marginBottom: 10,
-          padding: 10,
-          borderColor: 'rgba(0, 0, 0, .2)',
-          borderWidth: 1,
-          borderRadius: 8,
-          backgroundColor: '#fff',
-          shadowColor: "#000",
-          shadowOpacity: 0.07,
-          shadowRadius: 2,
-          shadowOffset: {
-            height: 4,
-            width: 3
-          },
-          elevation: 3,
-        }}
-      >
-        <Text style={{
-          fontSize: 24,
-          fontWeight: 'bold'
-        }}>{item.category}</Text>
-        <FlatList
+        <View
           style={{
-            marginTop: 4
+            marginLeft: 10,
+            marginRight: 10,
+            marginTop: 10,
+            marginBottom: 10,
+            padding: 10,
+            borderColor: 'rgba(0, 0, 0, .2)',
+            borderWidth: 1,
+            borderRadius: 8,
+            backgroundColor: '#fff',
+            shadowColor: "#000",
+            shadowOpacity: 0.07,
+            shadowRadius: 2,
+            shadowOffset: {
+              height: 4,
+              width: 3
+            },
+            elevation: 3,
           }}
-          horizontal={true}
-          contentContainerStyle={styles.horizontalList}
-          data={item.foods}
-          renderItem={renderFood}
-        />
-      </View>
+        >
+          <TouchableOpacity
+            onPress={() => {
+              console.log('clicked');
+              this.props.navigation.navigate('Category', {
+                category: item.category
+              });
+            }}
+          >
+            <Text style={{
+              fontSize: 24,
+              fontWeight: 'bold'
+            }}>{item.category}</Text>
+          </TouchableOpacity>
+          <FlatList
+            style={{
+              marginTop: 4
+            }}
+            horizontal={true}
+            contentContainerStyle={styles.horizontalList}
+            data={item.foods}
+            renderItem={renderFood}
+          />
+        </View>
     );
   }
 
   render() {
+
+    let dataToShow = data;
+
+    if (this.state.search) {
+
+    }
+
     return (
       <View>
         <TextInput
@@ -111,7 +126,7 @@ export default class HomeScreen extends React.Component {
         <View>
           <FlatList
             contentContainerStyle={styles.mainList}
-            data={data}
+            data={dataToShow}
             renderItem={this.renderCategory}
           />
         </View>

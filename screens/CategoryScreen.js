@@ -10,14 +10,14 @@ import {
   Image,
 } from 'react-native';
 
-let category = 'Pizza';
-let dataIndex = database.categories.findIndex(item => item.category == category);
-let data = database.categories[dataIndex].foods;
+
 
 export default class LinksScreen extends React.Component {
-  static navigationOptions = {
-    title: category,
-  };
+  static navigationOptions = ({ navigation, navigationOptions }) => {
+    return {
+      title: navigation.state.params.category
+    }
+  }
 
   renderItem({ item, index }) {
     return (
@@ -55,21 +55,23 @@ export default class LinksScreen extends React.Component {
             }}
         />
         <View style={{ marginLeft: 10 }}>
-          <Text style={{ fontWeight: 'bold' }}>{item.name}</Text>
+          <Text style={{ fontWeight: 'bold', fontSize: 18 }}>{item.name}</Text>
           <Text>Price: {database.formatter.price(item.price)}</Text>
-          <Text>Rating: {item.rating}</Text>
+          <Text>Rating: {item.rating}/5</Text>
         </View>
       </View>
     );
   }
 
   render() {
-    console.log('Data: ', data);
+    let dataIndex = database.categories.findIndex(item => item.category == this.props.navigation.state.params.category);
+    this.data = database.categories[dataIndex].foods;
+
     return (
       <View>
         <FlatList
           contentContainerStyle={styles.mainList}
-          data={data}
+          data={this.data}
           renderItem={this.renderItem}
         />
       </View>
