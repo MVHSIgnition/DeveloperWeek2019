@@ -78,10 +78,27 @@ export default class HomeScreen extends React.Component {
     let { status } = await Permissions.askAsync(Permissions.LOCATION);
     if (status !== 'granted') {
       this.setState({errorMessage: 'Location permission denied!'});
+      console.error('problem bith');
     }
 
     let location = await Location.getCurrentPositionAsync({});
+
+    /* let location = {
+      "coords": {
+        "accuracy": 5,
+        "altitude": 0,
+        "altitudeAccuracy": -1,
+        "heading": -1,
+        "latitude": 37.32529784053908,
+        "longitude": -121.94548105047858,
+        "speed": -1,
+      },
+      "timestamp": 1551034198566.186,
+    } */
+
     this.setState({ location });
+
+    console.log(location);
   };
 
   renderCategory = ({ item, index }) => {
