@@ -24,7 +24,7 @@ export default class LinksScreen extends React.Component {
     sortBy: 'relevance'
   }
 
-  renderItem({ item, index }) {
+  renderItem = ({ item, index }) => {
 
     return (
       <TouchableOpacity
@@ -70,7 +70,7 @@ export default class LinksScreen extends React.Component {
           <View style={{ marginLeft: 10 }}>
             <Text style={{ fontWeight: 'bold', fontSize: 18 }}>{item.name}</Text>
             <Text>Price: {database.formatter.price(item.price)}</Text>
-            <Text>Rating: {item.rating}/5</Text>
+            <Text>Rating: {item.yelpRating}/5</Text>
           </View>
         </View>
       </TouchableOpacity>
@@ -89,7 +89,7 @@ export default class LinksScreen extends React.Component {
         });
       } else if (this.state.sortBy === 'rating') {
         data.sort((a, b) => {
-          return b.rating - a.rating;
+          return b.yelpRating - a.yelpRating;
         });
       }
     }

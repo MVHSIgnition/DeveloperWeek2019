@@ -7,11 +7,12 @@ const database = {
           name: 'Chipotle',
           price: 4.8,
           yelpRating: 4.0,
-          review: [
+          postmatesLink: 'https://postmates.com/merchant/chipotle-mexican-grill-san-jose-2?p=529a227c-3f4d-53ff-b0cb-584b7939460a',
+          reviews: [
             {
-              name: 'Carol Janson',
+              name: 'Carol J',
               text: 'The burrito was actually suprisingly good; better than my Chipotle at home!',
-              calcRating: 4.3
+              calcRating: 5.0
             },
             {
               name: 'Greg J',
@@ -20,8 +21,18 @@ const database = {
             },
             {
               name: 'J K',
-              text: 'Entirety of Chipotle was pretty bad... including the burrito for some reason... tragic',
-              calcRating: 2.3
+              text: 'Love this Chipotle - my go to order, btw, is the burritoooooos.',
+              calcRating: 4.1
+            },
+            {
+              name: 'Rose C',
+              text: 'Always loving the burritos.',
+              calcRating: 4.3
+            },
+            {
+              name: 'Anne H',
+              text: 'Burritos were meh, love the tacos and always the CHIPS',
+              calcRating: 3.9
             }
           ],
           img: 'https://dorastable.com/wp-content/uploads/2018/01/vegan-chipotle-lime-burrito.jpg'
@@ -54,9 +65,20 @@ const database = {
           restaurant: 'Kebab and Curry',
           price: 4.5,
           yelpRating: 4.3,
-          posYelpReview: 'The Tandoori Chicken brought me back to India it was sooooo good.',
-          negYelpReview: 'The Tandoori Chicken was ok, but the price made me fear what was really in it.',
-          
+          reviews: [
+            {
+              name: 'John Abraham',
+              text: 'The Tandoori Chicken brought me back to India it was sooooo good.',
+              calcRating: 5
+            },
+            {
+              name: 'Matthew McKown',
+              text: 'The Tandoori Chicken was ok, but the price made me fear what was really in it.',
+              calcRating: 1
+            }
+          ],
+
+          description: 'Leg quarter marinated in our homemade spices and baked over grill.',
           img: 'https://dinnerthendessert.com/wp-content/uploads/2018/03/Tandoori-Chicken-4.jpg'
         },
         {
@@ -64,8 +86,18 @@ const database = {
           restaurant: 'Chicken Wow',
           price: 6.5,
           yelpRating: 4.1,
-          posYelpReview: 'Grilled Chicken was actually pretty good and felt kinda healthy.',
-          negYelpReview: 'Grilled Chicken was way too small and not worth the price.',
+          reviews: [
+            {
+              name: 'John Abraham',
+              text: 'Grilled Chicken was way too small and not worth the price. Not to mention soggy...dreadful',
+              calcRating: 5
+            },
+            {
+              name: 'Allen Heath',
+              text: 'Grilled Chicken was actually pretty good and felt kinda healthy.',
+              calcRating: 1
+            }
+          ],
           img: 'https://s3-media4.fl.yelpcdn.com/bphoto/jJD46dPoiuaR8xJFSIc89w/348s.jpg'
         }
       ]
@@ -85,70 +117,77 @@ const database = {
           name: 'Lamb Kadahi',
           price: 9.25,
           rating: 3.7,
-          img: ''
+          img: 'https://i0.wp.com/www.relishthebite.com/wp-content/uploads/2015/01/KadaiGhost-4.jpg'
         },
         {
           restaurant: "Kabab & Curry's",
           name: 'Saag Lamb',
           price: 9.75,
           rating: 3.7,
-          img: ''
+          img: 'https://s3-media2.fl.yelpcdn.com/bphoto/tS0zHJ3f96fmK3t4le9wXQ/o.jpg'
         },
         {
           restaurant: "Kabab & Curry's",
           name: 'Bhuna Ghost',
           price: 9.25,
           rating: 3.7,
-          img: ''
+          img: 'https://s3-media4.fl.yelpcdn.com/bphoto/D65JVuH3qh7IyAn8dBPeRw/ls.jpg'
         },
         {
           restaurant: "Kabab & Curry's",
           name: 'Lamb stew',
           price: 9.25,
           rating: 3.7,
-          img: ''
+          img: 'https://s3-media3.fl.yelpcdn.com/bphoto/p0T6q_-g-bod_uwcAKAVsg/o.jpg'
         },
         {
           restaurant: "Kabab & Curry's",
           name: 'Keema Aaloo',
           price: 9.95,
           rating: 3.7,
-          img: ''
+          img: 'https://www.yummytummyaarthi.com/wp-content/uploads/2018/02/1.-2.jpg'
         },
         {
           restaurant: "Kabab & Curry's",
           name: 'Chicken Tikka Masala',
           price: 9.25,
           rating: 3.7,
-          img: ''
+          img: 'https://www.recipetineats.com/wp-content/uploads/2018/04/Chicken-Tikka-Masala_0.jpg'
         },
         {
           restaurant: "Kabab & Curry's",
           name: 'Butter Chicken',
           price: 9.25,
           rating: 3.7,
-          img: ''
+          img: 'https://www.recipetineats.com/wp-content/uploads/2015/07/Butter-Chicken_5.jpg'
         },
         {
           restaurant: "Kabab & Curry's",
           name: 'Chicken Korma',
           price: 8.5,
           rating: 3.7,
-          img: ''
+          img: 'https://dinnerthendessert.com/wp-content/uploads/2018/03/Chicken-Korma.jpg'
         },
         {
           restaurant: "Kabab & Curry's",
           name: 'Chicken Kadahi',
           price: 9.25,
           rating: 3.7,
-          img: ''
+          img: 'https://cdn.shopify.com/s/files/1/1250/7105/products/Chicken_Karahi_5_1024x1024.JPG?v=1470195138'
         },
         {
           restaurant: "Kabab & Curry's",
           name: 'Saag Chicken',
-          price: 4.2,
+          price: 9.25,
           rating: 3.7,
-          img: ''
+          img: 'https://www.cookincanuck.com/wp-content/uploads/2017/09/Spinach-Chicken-Curry-Recipe-Chicken-Saag-Cookin-Canuck-3.jpg'
+        },
+        {
+          restaurant: "Kabab & Curry's",
+          name: 'Murgh Choley',
+          price: 9.25,
+          rating: 3.7,
+          img: 'https://www.cheflingkitchen.com/wp-content/uploads/2018/02/murgh-cholay.jpg'
         },
       ]
     }
