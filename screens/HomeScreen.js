@@ -65,7 +65,8 @@ export default class HomeScreen extends React.Component {
           ></Image>
           <Text
             style={{
-              fontSize: 16
+              fontSize: 16,
+              width: 100
             }}
           >{item.name}</Text>
           <Text
