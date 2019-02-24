@@ -47,7 +47,7 @@ export default class HomeScreen extends React.Component {
         "Authorization": "Basic " + 'user:pass'
       },
     })
-      .then(response => console.log(response))
+      .then(res => res.json())
       .catch(err => console.log(err));
     //this.$ = cio.load('');
   }*/
@@ -85,7 +85,6 @@ export default class HomeScreen extends React.Component {
   };
 
   renderCategory = ({ item, index }) => {
-
     function renderFood({ item }) {
       return (
         <View>
