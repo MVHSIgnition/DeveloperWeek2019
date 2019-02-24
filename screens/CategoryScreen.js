@@ -2,8 +2,9 @@ import React from 'react';
 import { StyleSheet } from 'react-native';
 
 import database from '../database';
+import { Button } from 'react-native';
 
-import { 
+import {
   View,
   FlatList,
   Text,
@@ -20,10 +21,11 @@ export default class LinksScreen extends React.Component {
   }
 
   renderItem({ item, index }) {
+
     return (
-      <View style={{ 
-        flex: 1, 
-        flexDirection: 'row', 
+      <View style={{
+        flex: 1,
+        flexDirection: 'row',
         marginBottom: 100,
         marginLeft: 10,
         marginRight: 10,
@@ -44,15 +46,15 @@ export default class LinksScreen extends React.Component {
         elevation: 3,
       }}>
         <Image
-            source={{
-              uri: item.img
-            }}
-            style={{
-              width: 100,
-              height: 100,
-              borderRadius: 8,
-              marginRight: 8
-            }}
+          source={{
+            uri: item.img
+          }}
+          style={{
+            width: 100,
+            height: 100,
+            borderRadius: 8,
+            marginRight: 8
+          }}
         />
         <View style={{ marginLeft: 10 }}>
           <Text style={{ fontWeight: 'bold', fontSize: 18 }}>{item.name}</Text>
@@ -64,11 +66,24 @@ export default class LinksScreen extends React.Component {
   }
 
   render() {
+
     let dataIndex = database.categories.findIndex(item => item.category == this.props.navigation.state.params.category);
-    this.data = database.categories[dataIndex].foods;
+
+    this.data = database.categories[dataIndex].foods.sort((a, b) => {
+      return a.price - b.price;
+    });
 
     return (
+
+
       <View>
+        <Button
+          //onPress={}
+          style={{ textAlign: 'right' }}
+          title="Price(Least to Greatest)"
+          color="#4286f4"
+          accessibilityLabel="Order the prices in ascending order "
+        />
         <FlatList
           contentContainerStyle={styles.mainList}
           data={this.data}
