@@ -7,7 +7,8 @@ import {
   View,
   TouchableOpacity,
   Animated,
-  TextInput
+  TextInput,
+  AppState
 } from 'react-native';
 import { WebBrowser, Location, Permissions } from 'expo';
 import database from '../database';
@@ -32,10 +33,12 @@ export default class HomeScreen extends React.Component {
 
   state = {
     location: null,
-    errorMessage: null
+    errorMessage: null,
+    showCategories: false,
+    appState: AppState.currentState
   };
 
-  constructor() {
+  /*constructor() {
     super();
     fetch('https://www.zomato.com/santa-clara-ca/mezbaan-bar-indian-cuisine-santa-clara/menu', {
       method: 'GET',
@@ -47,11 +50,29 @@ export default class HomeScreen extends React.Component {
       .then(res => res.json())
       .catch(err => console.log(err));
     //this.$ = cio.load('');
-  }
+  }*/
 
-  componentWillMount() {
+  /*componentDidMount() {
+    AppState.addEventListener('change', state => {
+      console.log('state: ', state);
+    });
     this._getLocationAsync();
   }
+
+  componentWillUnmount() {
+    AppState.removeEventListener('change', this._handleAppStateChange);
+  }
+
+  _handleAppStateChange = (nextAppState) => {
+    if (
+      this.state.appState.match(/inactive|background/) &&
+      nextAppState === 'active'
+    ) {
+      console.log('App has come to the foreground!');
+      this._getLocationAsync();
+    }
+    this.setState({appState: nextAppState});
+  };*/
 
   _getLocationAsync = async () => {
     let { status } = await Permissions.askAsync(Permissions.LOCATION);
@@ -151,8 +172,7 @@ export default class HomeScreen extends React.Component {
       }
     }
 
-    // console.log('Location: ', this.state.location);
-
+    this._getLocationAsync();
     if (this.state.location !== null) {
       let lat = this.state.location.coords.latitude;
       let lng = this.state.location.coords.longitude;
@@ -161,42 +181,55 @@ export default class HomeScreen extends React.Component {
         .then(data => {
           // console.log('data: ', data)
           if (data.geometries.length !== 0) {
-            console.log('YOU ARE IN THE FENCEEEEE!');
+            //console.log('YOU ARE IN THE FENCEEEEE!');
+            this.setState({showCategories:true});
+          } else {
+            this.setState({showCategories:false});
           }
         })
         .catch(err => console.log(err));
     }
 
-    return (
-      <View>
-        <AnimatedTextInput
-          style={{
-            height: 50,
-            backgroundColor: '#ddd',
-            paddingLeft: 14,
-            fontSize: 16
-          }}
-          onChangeText={search => this.setState({ search })}
-          placeholder="Search"
-        />
+    if (this.state.showCategories) {
+      //console.log(this.state.showCategories);
+      return (
         <View>
-          {dataToShow.length !== 0 && <FlatList
-            contentContainerStyle={styles.mainList}
-            data={dataToShow}
-            renderItem={this.renderCategory}
-            keyExtractor={item => item.category}
-            extraData={this.state}
-          />}
-          {dataToShow.length === 0 && <Text
+          <AnimatedTextInput
             style={{
-              fontSize: 18,
-              textAlign: 'center',
-              marginTop: '50%'
+              height: 50,
+              backgroundColor: '#ddd',
+              paddingLeft: 14,
+              fontSize: 16
             }}
-          >No results for {this.state.search}</Text>}
+            onChangeText={search => this.setState({ search })}
+            placeholder="Search"
+          />
+          <View>
+            {dataToShow.length !== 0 && <FlatList
+              contentContainerStyle={styles.mainList}
+              data={dataToShow}
+              renderItem={this.renderCategory}
+              keyExtractor={item => item.category}
+              extraData={this.state}
+            />}
+            {dataToShow.length === 0 && <Text
+              style={{
+                fontSize: 18,
+                textAlign: 'center',
+                marginTop: '50%'
+              }}
+            >No results for {this.state.search}</Text>}
+          </View>
         </View>
-      </View>
-    );
+      );
+    } else {
+      //console.log(this.state.showCategories);
+      return (
+        <View>
+          <Text style={{fontSize: 18, textAlign: 'center', marginTop: '50%'}}>No restaurants nearby!</Text>
+        </View>
+      );
+    }
   }
 
   _maybeRenderDevelopmentModeWarning() {
