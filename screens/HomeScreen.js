@@ -7,7 +7,7 @@ import {
   View,
   TouchableOpacity
 } from 'react-native';
-import { WebBrowser } from 'expo';
+import { WebBrowser, Location, Permissions } from 'expo';
 import database from '../database';
 import { TextInput } from 'react-native';
 
@@ -23,6 +23,25 @@ const styles = StyleSheet.create({
 export default class HomeScreen extends React.Component {
   static navigationOptions = {
     header: null
+  };
+
+  state = {
+    location: null,
+    errorMessage: null
+  };
+
+  componentWillMount() {
+    this._getLocationAsync();
+  }
+
+  _getLocationAsync = async () => {
+    let { status } = await Permissions.askAsync(Permissions.LOCATION);
+    if (status !== 'granted') {
+      this.setState({errorMessage: 'Location permission denied!'});
+    }
+
+    let location = await Location.getCurrentPositionAsync({});
+    this.setState({ location });
   };
 
   renderCategory = ({ item, index }) => {
@@ -110,6 +129,21 @@ export default class HomeScreen extends React.Component {
     /* if (this.state.search) {
 
     } */
+    console.log('Location: ', this.state.location);
+
+    if (this.state.location !== null) {
+      let lat = this.state.location.coords.latitude;
+      let lng = this.state.location.coords.longitude;
+      fetch(`https://gfe.cit.api.here.com/2/search/proximity.json?app_id=HoeQKWhoVTbuQ8HkxAjL&app_code=37-EHs_xz3YwLyN7t52JxQ&layer_ids=4711&key_attribute=NAME&proximity=${lat},${lng}`)
+        .then(response => response.json())
+        .then(data => {
+          console.log('data: ', data)
+          if (data.geometries.length != 0) {
+            console.log('YOU ARE IN THE FENCEEEEE!');
+          }
+        })
+        .catch(err => console.log(err));
+    }
 
     return (
       <View>
