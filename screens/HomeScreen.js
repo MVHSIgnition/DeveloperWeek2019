@@ -1,40 +1,135 @@
 import React from 'react';
 import {
   Image,
-  Platform,
-  ScrollView,
+  FlatList,
   StyleSheet,
   Text,
-  TouchableOpacity,
   View,
+  TouchableOpacity
 } from 'react-native';
 import { WebBrowser } from 'expo';
+import database from '../database';
+import { TextInput } from 'react-native';
+
+let data = database.categories;
+
+const styles = StyleSheet.create({
+  mainList: {
+  },
+  horizontalList: {
+  }
+});
 
 export default class HomeScreen extends React.Component {
   static navigationOptions = {
-    header: null,
+    header: null
   };
 
+  renderCategory = ({ item, index }) => {
+
+    function renderFood({ item }) {
+      return (
+        <View>
+          <Image
+            source={{
+              uri: item.img
+            }}
+            style={{
+              width: 100,
+              height: 100,
+              borderRadius: 8,
+              marginRight: 8
+            }}
+          ></Image>
+          <Text
+            style={{
+              fontSize: 16
+            }}
+          >{item.name}</Text>
+          <Text
+            style={{
+              fontSize: 14
+            }}
+          >{database.formatter.price(item.price)}</Text>
+        </View>
+      );
+    }
+
+    return (
+        <View
+          style={{
+            marginLeft: 10,
+            marginRight: 10,
+            marginTop: 10,
+            marginBottom: 10,
+            padding: 10,
+            borderColor: 'rgba(0, 0, 0, .2)',
+            borderWidth: 1,
+            borderRadius: 8,
+            backgroundColor: '#fff',
+            shadowColor: "#000",
+            shadowOpacity: 0.07,
+            shadowRadius: 2,
+            shadowOffset: {
+              height: 4,
+              width: 3
+            },
+            elevation: 3,
+          }}
+        >
+          <TouchableOpacity
+            onPress={() => {
+              console.log('clicked');
+              this.props.navigation.navigate('Category', {
+                category: item.category
+              });
+            }}
+          >
+            <Text style={{
+              fontSize: 24,
+              fontWeight: 'bold'
+            }}>{item.category}</Text>
+          </TouchableOpacity>
+          <FlatList
+            style={{
+              marginTop: 4
+            }}
+            horizontal={true}
+            contentContainerStyle={styles.horizontalList}
+            data={item.foods}
+            renderItem={renderFood}
+          />
+        </View>
+    );
+  }
+
   render() {
+
+    let dataToShow = data;
+
+    if (this.state.search) {
+
+    }
+
     return (
       <View>
-        <Text style={{
-          fontSize: 44,
-          fontWeight: 'bold',
-          marginTop: 16,
-          marginLeft: 10
-        }}>Food near you</Text>
-        <ScrollView>
-          <View style={styles.eachFood}>
-            <Text>BigMac</Text>
-          </View>
-          <View>
-            <Text>Cheeeeeseburger</Text>
-          </View>
-          <View>
-            <Text>Burger King Burger Thing</Text>
-          </View>
-        </ScrollView>
+        <TextInput
+          style={{
+            height: 50,
+            backgroundColor: '#ddd',
+            paddingLeft: 14,
+            fontSize: 16
+          }}
+          onChange={search => this.setState({ search })}
+          placeholder={"Search"}
+        />
+        <View>
+          <FlatList
+            contentContainerStyle={styles.mainList}
+            data={dataToShow}
+            renderItem={this.renderCategory}
+          />
+        </View>
       </View>
     );
   }
@@ -72,142 +167,3 @@ export default class HomeScreen extends React.Component {
     );
   };
 }
-
-const styles = StyleSheet.create({
-  eachFood: {
-    marginLeft: 10
-  },
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-  },
-  developmentModeText: {
-    marginBottom: 20,
-    color: 'rgba(0,0,0,0.4)',
-    fontSize: 14,
-    lineHeight: 19,
-    textAlign: 'center',
-  },
-  contentContainer: {
-    paddingTop: 30,
-  },
-  welcomeContainer: {
-    alignItems: 'center',
-    marginTop: 10,
-    marginBottom: 20,
-  },
-  welcomeImage: {
-    width: 100,
-    height: 80,
-    resizeMode: 'contain',
-    marginTop: 3,
-    marginLeft: -10,
-  },
-  getStartedContainer: {
-    alignItems: 'center',
-    marginHorizontal: 50,
-  },
-  homeScreenFilename: {
-    marginVertical: 7,
-  },
-  codeHighlightText: {
-    color: 'rgba(96,100,109, 0.8)',
-  },
-  codeHighlightContainer: {
-    backgroundColor: 'rgba(0,0,0,0.05)',
-    borderRadius: 3,
-    paddingHorizontal: 4,
-  },
-  getStartedText: {
-    fontSize: 17,
-    color: 'rgba(96,100,109, 1)',
-    lineHeight: 24,
-    textAlign: 'center',
-  },
-  tabBarInfoContainer: {
-    position: 'absolute',
-    bottom: 0,
-    left: 0,
-    right: 0,
-    ...Platform.select({
-      ios: {
-        shadowColor: 'black',
-        shadowOffset: { height: -3 },
-        shadowOpacity: 0.1,
-        shadowRadius: 3,
-      },
-      android: {
-        elevation: 20,
-      },
-    }),
-    alignItems: 'center',
-    backgroundColor: '#fbfbfb',
-    paddingVertical: 20,
-  },
-  tabBarInfoText: {
-    fontSize: 17,
-    color: 'rgba(96,100,109, 1)',
-    textAlign: 'center',
-  },
-  navigationFilename: {
-    marginTop: 5,
-  },
-  helpContainer: {
-    marginTop: 15,
-    alignItems: 'center',
-  },
-  helpLink: {
-    paddingVertical: 15,
-  },
-  helpLinkText: {
-    fontSize: 14,
-    color: '#2e78b7',
-  },
-});
-
-
-/* 
-<View style={styles.container}>
-        <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
-          <View style={styles.welcomeContainer}>
-            <Image
-              source={
-                __DEV__
-                  ? require('../assets/images/robot-dev.png')
-                  : require('../assets/images/robot-prod.png')
-              }
-              style={styles.welcomeImage}
-            />
-          </View>
-
-          <View style={styles.getStartedContainer}>
-            {this._maybeRenderDevelopmentModeWarning()}
-
-            <Text style={styles.getStartedText}>Get started by opening</Text>
-
-            <View style={[styles.codeHighlightContainer, styles.homeScreenFilename]}>
-              <MonoText style={styles.codeHighlightText}>screens/HomeScreen.js</MonoText>
-            </View>
-
-            <Text style={styles.getStartedText}>
-              Change this text and your app will automatically reload.
-            </Text>
-          </View>
-
-          <View style={styles.helpContainer}>
-            <TouchableOpacity onPress={this._handleHelpPress} style={styles.helpLink}>
-              <Text style={styles.helpLinkText}>Help, it didn’t automatically reload!</Text>
-            </TouchableOpacity>
-          </View>
-        </ScrollView>
-
-        <View style={styles.tabBarInfoContainer}>
-          <Text style={styles.tabBarInfoText}>This is a tab bar. You can edit it in:</Text>
-
-          <View style={[styles.codeHighlightContainer, styles.navigationFilename]}>
-            <MonoText style={styles.codeHighlightText}>navigation/MainTabNavigator.js</MonoText>
-          </View>
-        </View>
-      </View>
-
-*/
