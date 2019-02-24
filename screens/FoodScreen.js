@@ -6,7 +6,8 @@ import {
   FlatList,
   Text,
   Image,
-  Button
+  Button,
+  ScrollView
 } from 'react-native';
 
 
@@ -21,7 +22,7 @@ export default class FoodScreen extends React.Component {
   render = () => {
 
     return (
-      <View>
+      <ScrollView>
         <View
           style={{
             padding: 10
@@ -70,7 +71,7 @@ export default class FoodScreen extends React.Component {
           >Reviews</Text>
           {this.diplayReviews()}
         </View>
-      </View>
+      </ScrollView>
     );
   }
 
