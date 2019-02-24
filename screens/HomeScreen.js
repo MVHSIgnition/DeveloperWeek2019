@@ -79,7 +79,6 @@ export default class HomeScreen extends React.Component {
         >
           <TouchableOpacity
             onPress={() => {
-              console.log('clicked');
               this.props.navigation.navigate('Category', {
                 category: item.category
               });
