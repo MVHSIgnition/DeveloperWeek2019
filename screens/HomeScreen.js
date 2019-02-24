@@ -107,9 +107,9 @@ export default class HomeScreen extends React.Component {
 
     let dataToShow = data;
 
-    if (this.state.search) {
+    /* if (this.state.search) {
 
-    }
+    } */
 
     return (
       <View>
