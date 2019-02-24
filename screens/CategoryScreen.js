@@ -9,6 +9,7 @@ import {
   FlatList,
   Text,
   Image,
+  Picker
 } from 'react-native';
 
 
@@ -18,6 +19,10 @@ export default class LinksScreen extends React.Component {
     return {
       title: navigation.state.params.category
     }
+  }
+
+  state = {
+    sortBy: 'relevance'
   }
 
   renderItem({ item, index }) {
@@ -68,26 +73,54 @@ export default class LinksScreen extends React.Component {
   render() {
 
     let dataIndex = database.categories.findIndex(item => item.category == this.props.navigation.state.params.category);
+    let data = database.categories[dataIndex].foods;
 
-    this.data = database.categories[dataIndex].foods.sort((a, b) => {
-      return a.price - b.price;
-    });
+    if (this.state) {
+      if (this.state.sortBy === 'price') {
+        data.sort((a, b) => {
+          return a.price - b.price;
+        });
+      } else if (this.state.sortBy === 'rating') {
+        data.sort((a, b) => {
+          return b.rating - a.rating;
+        });
+      }
+    }
 
     return (
-
-
       <View>
         <Button
-          //onPress={}
-          style={{ textAlign: 'right' }}
-          title="Price(Least to Greatest)"
+          onPress={() => {
+            this.setState({
+              sortBy: 'price'
+            });
+          }}
+          title="Price"
           color="#4286f4"
-          accessibilityLabel="Order the prices in ascending order "
+          style={{
+            left: 0,
+            top: 0
+          }}
+        />
+        <Button
+          onPress={() => {
+            this.setState({
+              sortBy: 'rating'
+            });
+          }}
+          title="Rating"
+          color="#4286f4"
+          style={{
+            left: 0,
+            top: 0
+          }}
         />
         <FlatList
           contentContainerStyle={styles.mainList}
-          data={this.data}
+          data={data}
           renderItem={this.renderItem}
+          keyExtractor={item => item.name}
+          extraData={this.state}
         />
       </View>
     );

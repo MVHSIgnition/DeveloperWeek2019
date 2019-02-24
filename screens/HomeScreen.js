@@ -98,7 +98,6 @@ export default class HomeScreen extends React.Component {
         >
           <TouchableOpacity
             onPress={() => {
-              console.log('clicked');
               this.props.navigation.navigate('Category', {
                 category: item.category
               });
@@ -117,6 +116,7 @@ export default class HomeScreen extends React.Component {
             contentContainerStyle={styles.horizontalList}
             data={item.foods}
             renderItem={renderFood}
+            keyExtractor={item => item.name}
           />
         </View>
     );
@@ -162,6 +162,7 @@ export default class HomeScreen extends React.Component {
             contentContainerStyle={styles.mainList}
             data={dataToShow}
             renderItem={this.renderCategory}
+            keyExtractor={item => item.category}
           />
         </View>
       </View>
