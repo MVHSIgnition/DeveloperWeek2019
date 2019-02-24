@@ -45,17 +45,47 @@ export default class FoodScreen extends React.Component {
               borderRadius: 8,
             }}
           />
-          <FlatList
-            data={this.props.navigation.state.params.food.reviews}
-            keyExtractor={item => item.name}
-          />
+          <Text
+            style={{
+              fontSize: 24,
+              fontWeight: 'bold',
+              marginTop: 28,
+              marginBottom: 10
+            }}
+          >Reviews</Text>
+          {this.diplayReviews()}
         </View>
       </View>
     );
   }
 
   diplayReviews = () => {
+
+    let reviews = this.props.navigation.state.params.food.reviews;
+
+    console.log(reviews);
+
+    if (!reviews) {
+      return <Text>There are no reviews</Text>;
+    }
+
+    return (
+      <FlatList
+        data={reviews}
+        keyExtractor={item => item.name}
+        renderItem={({ item, index }) => {
+
+          return <View>
+            <Text style={{ fontWeight: 'bold', fontSize: 16 }}>{item.name}</Text>
+            <Text>Rating: {item.rating}/5</Text>
+            <Text>{item.text}</Text>
+          </View>
+        }}
+        extraData={this.state}
+        contentContainerStyle={{}}
+      />
     
+    );
   }
 
 }
